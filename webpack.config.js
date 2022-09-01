@@ -9,7 +9,7 @@ const isProduction = process.env.NODE_ENV == "production";
 const stylesHandler = "style-loader";
 
 const config = {
-  entry: "./src/index.ts",
+  entry: "./src/index.tsx",
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, "build"),
@@ -20,7 +20,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "index.html",
+      template: "src/index.html",
     }),
 
     // Add your plugins here
