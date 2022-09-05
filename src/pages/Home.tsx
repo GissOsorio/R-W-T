@@ -23,6 +23,7 @@ const HomePage: React.FunctionComponent<IHomePageProps> = (props) => {
                 {counter}
                 <button onClick={() => setCounter(counter+1)}>Add</button>
             </p>
+            
             <Searcher />
         </div>
 
