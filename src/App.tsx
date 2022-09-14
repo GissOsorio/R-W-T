@@ -11,7 +11,7 @@ type MyProps = {
     title: string,
     paragraph: string
 }
-export const App = ({title,paragraph}: MyProps) => {
+export const App = () => {
     return(
         <BrowserRouter>
             <Routes>
@@ -21,10 +21,10 @@ export const App = ({title,paragraph}: MyProps) => {
                     <Route index element={<AboutPage />} />
                     <Route path=":number" element={<AboutPage />} />
                 </Route>
-                <Route path="test" element={<TestPage />} />
-                <Route path="layout" element={<LayoutComponent />}>
-                    <Route index element={<AboutPage />} />
-                    <Route path=":number" element={<AboutPage />} />
+
+                <Route path="info">
+                    <Route index element={<TestPage />} />
+                    <Route path=":number" element={<TestPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
