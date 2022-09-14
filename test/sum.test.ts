@@ -5,3 +5,4 @@ describe("test add function", () => {
     expect(add(10, 5)).toBe(15);
   });
 })
+

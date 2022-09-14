@@ -7,31 +7,27 @@ import { green } from '@mui/material/colors';
 const marks = [
   {
     value: 0,
-    label: '0UV',
+    label: '0 UV',
   },
   {
-    value: 2,
-    label: '2UV',
+    value: 3,
+    label: '3 UV',
   },
   {
-    value: 5,
-    label: '5UV',
+    value: 6,
+    label: '6 UV',
   },
   {
-    value: 7,
-    label: '7UV',
+    value: 8,
+    label: '8 UV',
   },
   {
-    value: 10,
-    label: '10UV',
+    value: 11,
+    label: '11 UV',
   },
   {
     value: 15,
-    label: '15UV',
-  },
-  {
-    value: 20,
-    label: '20UV',
+    label: '15 UV',
   },
 ];
 
@@ -70,6 +66,8 @@ export const FinalX = ({uv, city}: MyUv) => {
       }}
     >
         Índice UV: {uv}
+        <br/>
+        EXTREMO
       </Box></>
 
 

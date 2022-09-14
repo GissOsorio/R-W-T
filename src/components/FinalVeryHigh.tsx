@@ -10,24 +10,24 @@ const marks = [
     label: '0 UV',
   },
   {
-    value: 2,
-    label: '2 UV',
+    value: 3,
+    label: '3 UV',
   },
   {
-    value: 5,
-    label: '5 UV',
+    value: 6,
+    label: '6 UV',
   },
   {
-    value: 7,
-    label: '7 UV',
-  },
-  {
-    value: 10,
-    label: '10 UV',
+    value: 8,
+    label: '8 UV',
   },
   {
     value: 11,
     label: '11 UV',
+  },
+  {
+    value: 15,
+    label: '15 UV',
   },
 ];
 
@@ -66,6 +66,8 @@ export const FinalVeryHigh = ({uv, city}: MyUv) => {
       }}
     >
         Índice UV: {uv}
+        <br/>
+        MUY ALTO
       </Box></>
 
 

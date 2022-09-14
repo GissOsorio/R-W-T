@@ -19,6 +19,19 @@ export const NavigationBar= () => {
 
     return (
         <Box sx={{ width: 1000 }}>
+                                    <Box
+                sx={{
+                    color: '#51B79E',
+                    display: 'inline',
+                    fontWeight: 'bold',
+                    mx: 0.5,
+                    fontSize: 20,
+                }}
+                >
+                    RADIACION UV
+                    <br/>
+
+            </Box>
         <BottomNavigation
             showLabels
             value={value}

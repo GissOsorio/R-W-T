@@ -4,7 +4,7 @@ import {CityType} from "../types/cityType";
 import UvApi from '../services/uv';
 import UVApi from "../services/uv";
 
-export default function CityApi(city: string) {
+export default function CityApi(city: string){
     console.log("Entró city")
     async function getData() {
       try{

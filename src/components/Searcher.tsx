@@ -12,46 +12,72 @@ import { useEffect} from "react";
 import axios from "axios";
 import {Respuesta} from '../components/Respuesta'
 
+
 export const Searcher= () => {
   const [showChild, setShowChild ] = useState(false);
   const [fetchedData, setFetchedData] = useState<string[]>([]);
   const [fetchedDataUV, setFetchedDataUV] = useState<number>();
-    const navigate = useNavigate();
-    const [city,setCity] = useState<string>('')
-    useEffect(() => {
-      const getData = async () => {
-        const response  = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=98e14e85c168d9f23e29a74b490b8f4d`);
-        setFetchedData([response.data[0].lon,response.data[0].lat]);
-        const responseUV = await axios.get(
-          `https://api.openuv.io/api/v1/uv?lat=${response.data[0].lat}&lng=${response.data[0].lon}`,
-          { 
-              headers: {
-                  'x-access-token': '5fad95476ae7d9eee78c5fad85a7f666',
-              },
-          },
-        )
-        setFetchedDataUV(responseUV.data.result.uv)
-      };
-      getData();
-    }, [city]);
+  const [city,setCity] = useState<string>('')
+  const [isShown, setIsShown] = useState(false);
+  const [data, setData] = useState({data: []});
+  const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState('');
 
-    return (
-      <Box>
-        <Paper
-          component="form"
-          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search City"
-            inputProps={{ 'aria-label': 'search google maps' }}
-            onChange={event=>{                                 //adding the onChange event
-                setCity(event.target.value)
+  const handleClick = async () => {
+    setIsLoading(true);
 
-              }}
-          />
+    try {
+      const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=98e14e85c168d9f23e29a74b490b8f4d`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
 
-          <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => App("quito") }>
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      console.log("CONSOLE DEL RESPONSE")
+      console.log(response)
+      console.log(result[0].lat)
+      console.log(result[0].lon)
+      setFetchedData([result[0].lon,result[0].lat]);
+      const responseUV = await fetch(`https://api.openuv.io/api/v1/uv?lat=${result[0].lat}&lng=${result[0].lon}`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'x-access-token': '6b9a1beeaacbb51a5ca2904f85d08ea8',
+        },
+      });
+      const resultUV = await responseUV.json();
+      setFetchedDataUV(resultUV.result.uv)
+      
+    } catch (err) {
+      setErr(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  console.log(data);
+
+  return (
+    <Box>
+      <Paper
+        component="form"
+        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+      >
+        <InputBase
+          sx={{ ml: 1, flex: 1 }}
+          placeholder="Search City"
+          inputProps={{ 'aria-label': 'search google maps' }}
+          onChange={event=>{                                 //adding the onChange event
+              setCity(event.target.value)
+            }}
+        />
+
+          <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={handleClick}>
             <SearchIcon />
           </IconButton>
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
@@ -60,24 +86,15 @@ export const Searcher= () => {
           </IconButton>
           
         </Paper>
-        <div>
-          longitud:  
-          {fetchedData[0]}
-          <br/>
-          latitud:  
-          {fetchedData[1]}
-          <br/>
-          uv:  
-          <br/>
-          {fetchedDataUV}
-        </div>
-        {city.length > 0 &&
-          <Respuesta uv={fetchedDataUV} city={city}  />
-        }
- 
-      </Box>
-        
-      );
 
+      <div>
+        {err && <h2>{err}</h2>}
 
-};
+        {isLoading && <h2>Loading...</h2>}
+
+        <Respuesta uv={fetchedDataUV} city={city}/>
+      </div>
+
+    </Box>
+    );
+}

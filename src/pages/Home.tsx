@@ -27,6 +27,8 @@ const HomePage: React.FunctionComponent<IHomePageProps> = (props) => {
     console.log("Aqui está mi variable,",counter)
     return (
         <div>
+
+
              <Box>
           <PostsContext.Provider value={postsContextDefaultValue} >
             <Stack alignItems="center" spacing={2}>
